@@ -85,6 +85,58 @@ pureref \
 wf-recorder-git
 
 ############################################
+# Copy dotfiles to ~/.config
+############################################
+echo "==> Copying config files..."
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_SRC="$SCRIPT_DIR/configs"
+CONFIG_DEST="/home/$USERNAME/.config"
+
+# Ensure destination exists
+mkdir -p "$CONFIG_DEST"
+
+# Copy everything
+cp -rT "$CONFIG_SRC" "$CONFIG_DEST"
+
+# Fix ownership
+chown -R "$USERNAME:$USERNAME" "$CONFIG_DEST"
+
+############################################
+# Zsh setup
+############################################
+echo "==> Installing and setting zsh as default shell..."
+
+# Ensure zsh is installed
+pacman -S --needed --noconfirm zsh
+
+# Change default shell for the user
+if [[ "$(getent passwd "$USERNAME" | cut -d: -f7)" != "/bin/zsh" ]]; then
+  chsh -s /bin/zsh "$USERNAME"
+  echo "Default shell changed to zsh for $USERNAME"
+else
+  echo "zsh is already the default shell for $USERNAME"
+fi
+
+############################################
+# Install user's .zshrc
+############################################
+echo "==> Installing .zshrc..."
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ZSHRC_SRC="$SCRIPT_DIR/.zshrc"
+ZSHRC_DEST="/home/$USERNAME/.zshrc"
+
+if [[ -f "$ZSHRC_SRC" ]]; then
+  cp "$ZSHRC_SRC" "$ZSHRC_DEST"
+  chown "$USERNAME:$USERNAME" "$ZSHRC_DEST"
+  chmod 644 "$ZSHRC_DEST"
+  echo ".zshrc installed successfully"
+else
+  echo "WARNING: .zshrc not found in script directory"
+fi
+
+############################################
 # Done
 ############################################
 echo "========================================"
