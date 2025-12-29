@@ -29,7 +29,7 @@ neovim networkmanager noisetorch noto-fonts noto-fonts-cjk \
 noto-fonts-emoji noto-fonts-extra nwg-look obs-studio obsidian \
 pacman-contrib papirus-icon-theme pipewire python-pyqt6 qbittorrent \
 qt6-shadertools qt6-tools reflector rofi starship steam swaync \
-swww tailscale tealdeer terminus-font thunar thunar-archive-plugin \
+swww tailscale tealdeer terminus-font \
 thunderbird ttf-cascadia-code ttf-liberation ueberzugpp unrar unzip \
 vlc vulkan-tools waybar waypaper wget wine winetricks wiremix \
 yazi yt-dlp zip zram-generator zsh \
